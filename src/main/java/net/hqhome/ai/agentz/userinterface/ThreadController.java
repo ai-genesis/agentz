@@ -1,27 +1,16 @@
 package net.hqhome.ai.agentz.userinterface;
 
-import com.alibaba.fastjson2.JSONObject;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.Data;
-import net.hqhome.ai.agentz.infrastructor.common.SuperHttpClient;
+import lombok.extern.slf4j.Slf4j;
+import net.hqhome.ai.agentz.application.ThreadService;
+import net.hqhome.ai.agentz.domain.event.IPublisher;
+import net.hqhome.ai.agentz.domain.user.User;
 import net.hqhome.ai.agentz.userinterface.dto.MessageRequest;
 import net.hqhome.ai.agentz.userinterface.dto.ThreadRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import net.hqhome.ai.agentz.application.ThreadService;
-// import net.hqhome.ai.agentz.domain.event.EventType;
-import net.hqhome.ai.agentz.domain.event.IPublisher;
-import net.hqhome.ai.agentz.domain.user.User;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import java.io.*;
-import java.net.URISyntaxException;
-
+@Slf4j
 @RestController
 @RequestMapping("/api/thread")
 public class ThreadController {

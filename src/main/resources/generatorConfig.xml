@@ -16,6 +16,7 @@
     </table>
     <table tableName="message" domainObjectName="MessageDO" mapperName="MessageMapper">
       <columnOverride column="is_deleted" javaType="java.lang.Boolean" />
+      <columnOverride column="internal" javaType="java.lang.Boolean" />
       <columnOverride column="content" jdbcType="VARCHAR" />
     </table>
   </context>
@@ -32,6 +33,7 @@
     </table>
     <table tableName="agent" domainObjectName="AgentDO" mapperName="AgentMapper">
       <columnOverride column="is_deleted" javaType="java.lang.Boolean" />
+      <columnOverride column="system_message" jdbcType="VARCHAR" />
     </table>
   </context>
 </generatorConfiguration>

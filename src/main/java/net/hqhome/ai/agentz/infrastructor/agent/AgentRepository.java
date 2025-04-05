@@ -16,6 +16,8 @@ public class AgentRepository implements IAgentRepository {
   @Autowired
   private ModelMapper modelMapper;
 
+  // TODO check is deleted
+
   @Override
   public Agent getById(String id) {
     AgentDOExample example = new AgentDOExample();

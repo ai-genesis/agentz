@@ -60,6 +60,14 @@ public class AgentFactory {
     return null;
   }
 
+  public Thought createThought(String task, JSONObject parameters, String raw) {
+    return new Thought(task, parameters, raw);
+  }
+
+  public Task createTask(String name, JSONObject parameters) {
+    return new Task(name, parameters);
+  }
+
   public static void main(String[] args) {
     var json = """
             {"type":"bearer", "token": "token"}

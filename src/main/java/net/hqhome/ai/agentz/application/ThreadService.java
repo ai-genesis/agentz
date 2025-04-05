@@ -91,9 +91,9 @@ public class ThreadService implements ISubscriber {
 //            return;
 //        }
 
-        var previous = threadDeferredResult.putIfAbsent(threadId, Map.entry(thread, deferredResult));
+        var oldVal = threadDeferredResult.putIfAbsent(threadId, Map.entry(thread, deferredResult));
 
-        if (previous != null) {
+        if (oldVal != null) {
             deferredResult.setErrorResult(new RuntimeException("thread is running"));
             return;
         }

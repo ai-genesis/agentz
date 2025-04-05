@@ -21,6 +21,8 @@ public class ThreadRepository implements IThreadRepository {
   @Autowired
   private MessageMapper messageMapper;
 
+  // TODO check is deleted
+
   @Override
   public void save(Thread thread) {
     threadMapper.insertSelective(ThreadDataObjectConverter.INSTANCE.toDO(thread));

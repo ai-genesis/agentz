@@ -6,5 +6,6 @@ CREATE TABLE IF NOT EXISTS `message` (
   `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Create Time',
   `modified_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Modified Time',
   `is_deleted` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'Is Deleted, 1 true 0 false',
+  `internal` tinyint(3) unsigned NOT NULL COMMENT 'Internal, 1 true 0 false',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='message'

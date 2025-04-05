@@ -43,6 +43,8 @@ public interface AgentDataObjectConverter {
     default Agent toAgent(AgentDO agentDO) {
         if (agentDO.getType().equals(AgentType.CHAT.toString())) {
             return toChatAgent(agentDO);
+        } else if (agentDO.getType().equals(AgentType.REACT.toString())) {
+            return toReActAgent(agentDO);
         }
         return null;
     }
@@ -56,6 +58,9 @@ public interface AgentDataObjectConverter {
 
     @InheritInverseConfiguration(name = "toDO")
     ChatAgent toChatAgent(AgentDO agentDO);
+
+    @InheritInverseConfiguration(name = "toDO")
+    ReActAgent toReActAgent(AgentDO agentDO);
 
     @InheritInverseConfiguration(name = "toDO")
     OpenAIModel toOpenAIModel(ModelDO modelDO);
