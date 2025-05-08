@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class ReActAgent extends Agent {
     @Override
-    public String run(IAgentResource agentResource, List<ChatMessage> messages) {
+    public ModelResponse run(IAgentResource agentResource, List<ChatMessage> messages) {
         messages.addFirst(new ChatMessage(ChatMessage.ROLE_SYSTEM, systemMessage));
         return model.chatCompletion(agentResource, modelParameter, messages);
     }

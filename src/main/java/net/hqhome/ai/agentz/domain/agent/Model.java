@@ -14,13 +14,14 @@ public abstract class Model {
   protected String name;
   protected String description;
   protected String creatorId;
-  protected List<String> stop;
-  protected Double temperature;
+//  protected List<String> stop;
+//  protected Double temperature;
   protected String url;
   protected String model;
   protected Authorization authorization;
 
   public abstract String chatCompletion(IAgentResource resource, List<ChatMessage> message);
 
-  public abstract String chatCompletion(IAgentResource resource, ModelParameter parameter, List<ChatMessage> message);
+//  public abstract String chatCompletion(IAgentResource resource, ModelParameter parameter, List<ChatMessage> message);
+  public abstract ModelResponse chatCompletion(IAgentResource resource, ModelParameter parameter, List<ChatMessage> message);
 }

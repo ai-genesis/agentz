@@ -8,12 +8,15 @@ import net.hqhome.ai.agentz.domain.thread.Thread;
 import net.hqhome.ai.agentz.domain.thread.ThreadStatus;
 import net.hqhome.ai.agentz.infrastructor.agent.dataobject.AgentDO;
 import net.hqhome.ai.agentz.infrastructor.agent.dataobject.ModelDO;
+import net.hqhome.ai.agentz.infrastructor.agent.dto.OpenAIResponse;
 import net.hqhome.ai.agentz.infrastructor.thread.dataobject.MessageDO;
 import net.hqhome.ai.agentz.infrastructor.thread.dataobject.ThreadDO;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 @Mapper
 public interface AgentDataObjectConverter {
@@ -89,4 +92,9 @@ public interface AgentDataObjectConverter {
     default ModelType mapModelType(String str) {
         return ModelType.of(str);
     }
+
+    @Mapping(target = "content", source = "message.content")
+    @Mapping(target = "tools", source = "message.toolCalls")
+    ModelResponse toResponse(OpenAIResponse.Choice choice);
+
 }

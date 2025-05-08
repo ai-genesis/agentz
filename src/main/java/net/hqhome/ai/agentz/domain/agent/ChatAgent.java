@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ChatAgent extends Agent {
     @Override
-    public String run(IAgentResource agentResource, List<ChatMessage> messages) {
+    public ModelResponse run(IAgentResource agentResource, List<ChatMessage> messages) {
         return model.chatCompletion(agentResource, modelParameter, messages);
     }
 }

@@ -20,11 +20,12 @@ public class OpenAIModel extends Model {
         return encodedApiKey;
     }
     public String chatCompletion(IAgentResource resource, List<ChatMessage> message) {
-        return resource.chatCompletions(type, url, authorization, model, message, stop, temperature);
+        return null;
+        //        return resource.chatCompletions(type, url, authorization, model, message, stop, temperature);
     }
 
-    public String chatCompletion(IAgentResource resource, ModelParameter parameter, List<ChatMessage> message) {
-        return resource.chatCompletions(type, url, authorization, model, message, parameter.getStop(), parameter.getTemperature());
+    public ModelResponse chatCompletion(IAgentResource resource, ModelParameter parameter, List<ChatMessage> message) {
+        return resource.chatCompletions(type, url, authorization, model, message, parameter);
     }
 
 

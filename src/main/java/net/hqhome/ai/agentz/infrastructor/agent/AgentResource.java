@@ -1,9 +1,7 @@
 package net.hqhome.ai.agentz.infrastructor.agent;
 
 import com.alibaba.fastjson2.JSONObject;
-import net.hqhome.ai.agentz.domain.agent.ChatMessage;
-import net.hqhome.ai.agentz.domain.agent.IAgentResource;
-import net.hqhome.ai.agentz.domain.agent.ModelType;
+import net.hqhome.ai.agentz.domain.agent.*;
 import net.hqhome.ai.agentz.domain.agent.authorization.Authorization;
 import net.hqhome.ai.agentz.domain.agent.authorization.BearerAuthorization;
 import net.hqhome.ai.agentz.infrastructor.agent.dto.OpenAIRequest;
@@ -35,7 +33,7 @@ public class AgentResource implements IAgentResource {
         switch (type) {
             case OPENAI:
                 clazz = OpenAIResponse.class;
-                body = new OpenAIRequest(model, messageList, stop, temperature);
+//                body = new OpenAIRequest(model, messageList, stop, temperature);
                 break;
             default:
                 // no op
@@ -57,6 +55,84 @@ public class AgentResource implements IAgentResource {
     public String chatCompletions(ModelType type, String url, Authorization authorization, String model, List<ChatMessage> messageList, List<String> stop, Double temperature) {
         if (authorization instanceof BearerAuthorization bearerAuthorization) {
             return chatCompletions(type, url, bearerAuthorization.getToken(), model, messageList, stop, temperature);
+        }
+        return null;
+    }
+
+//    @Override
+    public String chatCompletions(ModelType type, String url, String token, String model, List<ChatMessage> messageList, ModelParameter parameter) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + token);
+
+        Class clazz = null;
+        Object body = null;
+
+        switch (type) {
+            case OPENAI:
+                clazz = OpenAIResponse.class;
+//                body = new OpenAIRequest(model, messageList, stop, temperature);
+                break;
+            default:
+                // no op
+        }
+
+        Object res = superHttpClient.request(url, HttpMethod.POST, headers, body, clazz);
+
+        switch (type) {
+            case OPENAI:
+                return ((OpenAIResponse) res).getChoices().get(0).getMessage().getContent();
+            default:
+                // no op
+        }
+
+        return null;
+    }
+
+    public ModelResponse bearerAuthorizationChatCompletions(ModelType type, String url, String token, String model, List<ChatMessage> messageList, ModelParameter parameter) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + token);
+
+        Class clazz = null;
+        Object body = null;
+
+        switch (type) {
+            case OPENAI:
+                clazz = OpenAIResponse.class;
+                body = OpenAIRequest.builder()
+                        .model(model)
+                        .messages(messageList)
+                        .stop(parameter.getStop())
+                        .temperature(parameter.getTemperature())
+                        .build();
+                break;
+            default:
+                // no op
+        }
+
+        Object res = superHttpClient.request(url, HttpMethod.POST, headers, body, clazz);
+
+        switch (type) {
+            case OPENAI:
+                return AgentDataObjectConverter.INSTANCE.toResponse(((OpenAIResponse) res).getChoices().get(0));
+            default:
+                // no op
+        }
+
+        return null;
+    }
+
+//    @Override
+//    public String chatCompletions(ModelType type, String url, Authorization authorization, String model, List<ChatMessage> messageList, ModelParameter parameter) {
+//        if (authorization instanceof BearerAuthorization bearerAuthorization) {
+//            return bearerAuthorizationChatCompletions(type, url, bearerAuthorization.getToken(), model, messageList, parameter);
+//        }
+//        return null;
+//    }
+
+    @Override
+    public ModelResponse chatCompletions(ModelType type, String url, Authorization authorization, String model, List<ChatMessage> messageList, ModelParameter parameter) {
+        if (authorization instanceof BearerAuthorization bearerAuthorization) {
+            return bearerAuthorizationChatCompletions(type, url, bearerAuthorization.getToken(), model, messageList, parameter);
         }
         return null;
     }

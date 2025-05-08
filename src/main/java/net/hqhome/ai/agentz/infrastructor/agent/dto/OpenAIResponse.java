@@ -19,5 +19,19 @@ public class OpenAIResponse {
     public static class Message {
         private String role;
         private String content;
+        private List<ToolCall> toolCalls;
+    }
+
+    @Data
+    public static class ToolCall {
+        private String id;
+        private String type;
+        private Function function;
+    }
+
+    @Data
+    public static class Function {
+        private String name;
+        private String arguments;
     }
 }

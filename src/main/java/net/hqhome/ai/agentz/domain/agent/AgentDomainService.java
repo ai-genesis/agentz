@@ -45,11 +45,11 @@ public class AgentDomainService extends AbstractDomainService {
 
             if (agent instanceof ChatAgent) {
                 try {
-                    String res = agent.run(agentResource, JSON.parseArray(msgAddedEvent.getMessages(), ChatMessage.class));
+                    ModelResponse res = agent.run(agentResource, JSON.parseArray(msgAddedEvent.getMessages(), ChatMessage.class));
                     AgentFinishedDomainEvent agentFinishedDomainEvent = new AgentFinishedDomainEvent();
                     agentFinishedDomainEvent.setThreadId(msgAddedEvent.getThreadId());
                     agentFinishedDomainEvent.setIsError(false);
-                    agentFinishedDomainEvent.setResult(res);
+                    agentFinishedDomainEvent.setResult(res.getContent());
                     publishEvent(agentFinishedDomainEvent);
                 } catch (Exception e) {
                     AgentFinishedDomainEvent agentFinishedDomainEvent = new AgentFinishedDomainEvent();
@@ -59,6 +59,7 @@ public class AgentDomainService extends AbstractDomainService {
                     publishEvent(agentFinishedDomainEvent);
                 }
             } else if (agent instanceof ReActAgent) {
+
 
                 fun(agent, JSON.parseArray(msgAddedEvent.getMessages(), ChatMessage.class), msgAddedEvent.getThreadId());
 //                String res = agent.run(agentResource, JSON.parseArray(msgAddedEvent.getMessages(), ChatMessage.class));

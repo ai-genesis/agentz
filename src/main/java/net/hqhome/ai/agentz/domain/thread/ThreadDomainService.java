@@ -49,24 +49,23 @@ public class ThreadDomainService extends AbstractDomainService {
 //                return;
 //            }
 
-            synchronized (thread) {
+//            synchronized (thread) {
                 // todo
 //                if (thread.isRunning()) {
 //                    log.warn("add message failed, because thread {} is running", thread.getId());
 //                    return;
 //                }
+            thread.setStatus(ThreadStatus.RUNNING);
+            thread.addMessage(message);
+            threadRepository.update(thread, message);
 
-                thread.setStatus(ThreadStatus.RUNNING);
-                thread.addMessage(message);
-                threadRepository.update(thread, message);
+            UserMessageAddedDomainEvent userMessageAddedDomainEvent = new UserMessageAddedDomainEvent();
+            userMessageAddedDomainEvent.setThreadId(thread.getId());
+            userMessageAddedDomainEvent.setAgentId(thread.getAgentId());
+            userMessageAddedDomainEvent.setMessages(JSON.toJSONString(thread.getMessages()));
 
-                UserMessageAddedDomainEvent userMessageAddedDomainEvent = new UserMessageAddedDomainEvent();
-                userMessageAddedDomainEvent.setThreadId(thread.getId());
-                userMessageAddedDomainEvent.setAgentId(thread.getAgentId());
-                userMessageAddedDomainEvent.setMessages(JSON.toJSONString(thread.getMessages()));
-
-                publishEvent(userMessageAddedDomainEvent);
-            }
+            publishEvent(userMessageAddedDomainEvent);
+//            }
 
         } else if (message.getRole().equals(Message.ROLE_ASSISTANT)
             || message.getRole().equals(Message.ROLE_MODEL)

@@ -25,7 +25,8 @@ public abstract class Agent {
   // thread add message --message added--> model-completion? no, script
   // react 系统prompt, 生成工具（fire an event），工具执行(执行完，再fire event)，agent根据结果执行下一步，执行完继续生成下一步任务
 
-  public abstract String run(IAgentResource agentResource, List<ChatMessage> messages);
+//  public abstract String run(IAgentResource agentResource, List<ChatMessage> messages);
+  public abstract ModelResponse run(IAgentResource agentResource, List<ChatMessage> messages);
 //  public List<Task> parseOutput(String output) {
 //    return null;
 //  }
